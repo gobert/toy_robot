@@ -24,5 +24,6 @@ class ToyRobot
 
   def require_program_files
     require File.expand_path('../command.rb', root)
+    require File.expand_path('../commands_list.rb', root)
   end
 end
