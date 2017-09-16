@@ -5,8 +5,14 @@ inherit_from: ./.rubocop.yml
 
 # Disable code quality indicators
 # We should use another tool for that
+Metrics/BlockLength:
+  Enabled: false
+
 Metrics/MethodLength:
   Enabled: false
 
 Metrics/AbcSize:
+  Enabled: false
+
+RSpec/NestedGroups:
   Enabled: false

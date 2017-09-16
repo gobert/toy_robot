@@ -2,6 +2,8 @@ ruby '2.4.1'
 
 source 'https://rubygems.org'
 
+gem 'activesupport'
+
 group :development, :test do
   gem 'awesome_print', git: 'https://github.com/awesome-print/awesome_print',
                        tag: 'v1.8.0'

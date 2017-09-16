@@ -18,10 +18,11 @@ class ToyRobot
 
   def require_libraries
     require 'bundler'
+    require 'active_support/core_ext/object/blank'
     Bundler.require(environment)
   end
 
   def require_program_files
-    require File.expand_path('../board.rb', root)
+    require File.expand_path('../command.rb', root)
   end
 end
