@@ -1,0 +1,7 @@
+language: ruby
+rvm: 2.4.1
+install: bundle install
+
+script:
+  - bundle exec rspec -- spec
+  - bundle exec rubocop -c .rubocop-validation.yml -- .

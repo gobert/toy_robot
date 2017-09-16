@@ -1,0 +1,12 @@
+# Rubocop file for validating the code before comitting
+# It's more strict than the one one the IDE, that will keep displaying
+# advices
+inherit_from: ./.rubocop.yml
+
+# Disable code quality indicators
+# We should use another tool for that
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false

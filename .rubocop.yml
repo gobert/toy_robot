@@ -1,0 +1,17 @@
+# Rubocop file for the IDE
+# It's stricter than the one for validation: advices are display on the IDE,
+# but this strictness have no time impact on validation
+
+require: rubocop-rspec
+
+# We can talk about that but yes: I think that:
+# if !true
+# is more understable than
+# unless true
+Style/NegatedIf:
+  Enabled: false
+
+# Disable this one because rubocop is not consistent with ruby-style-guide
+# https://github.com/bbatsov/ruby-style-guide/tree/2aae57ed197e2b3d9a475c665a831a30b7b6d072#alias-method
+Style/Alias:
+  Enabled: false

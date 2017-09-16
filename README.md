@@ -1,30 +1,7 @@
 # Toy Robot Simulator
+![Travis build information for branch master](https://api.travis-ci.org/gobert/toy_robot.svg?branch=master)
 
-Please provide your source code, and any test code/data
-you using in developing your solution.
-
-Please send your submission to us via email as a zip file or
-as a link to the repository hosting your code. (If you choose to keep your
-repository private, contact us about adding us to your repository
-as collaborators.) Do not create a pull request against this repository.
-
-Please engineer your solution to a standard you consider
-suitable for production.
-
-## Description
-
-* The application is a simulation of a toy robot moving
-on a square tabletop, of dimensions 5 units x 5 units.
-* There are no other obstructions on the table surface.
-* The robot is free to roam around the surface of the table,
-but must be prevented from falling to destruction.
-Any movement that would result in the robot falling
-from the table must be prevented, however further
-valid movement commands must still be allowed.
-
-## Task
-
-Create an application that can read in commands of the following form:
+This is a simulator of a robot that evolve on a 5x5 square tabletop. As input it takes a files like:
 
 ```
 PLACE X,Y,F
@@ -33,67 +10,37 @@ LEFT
 RIGHT
 REPORT
 ```
+The ```REPORT``` will announce the X,Y and F of the robot: it will be our output on STDOUT.
 
-* `PLACE` will put the toy robot on the table in position X,Y
-and facing `NORTH`, `SOUTH`, `EAST` or `WEST`.
-* The origin (0,0) can be considered to be the `SOUTH WEST` most corner.
-* The first valid command to the robot is a `PLACE` command,
-after that, any sequence of commands may be issued, in any order,
-including another `PLACE` command.
-The application should discard all commands in the sequence
-until a valid `PLACE `command has been executed.
-* `MOVE` will move the toy robot one unit forward
-in the direction it is currently facing.
-* `LEFT` and `RIGHT` will rotate the robot 90 degrees
-in the specified direction
-without changing the position of the robot.
-* `REPORT` will announce the X,Y and F of the robot.
-This can be in any form, but standard output is sufficient.
+# Set up
+* Install ruby 2.4.1. For instance using rvm ``` rvm install 2.4.1```
+* Install dependencies ```bundle install```
 
-* A robot that is not on the table can choose
-to ignore the `MOVE`, `LEFT`, `RIGHT` and `REPORT` commands.
-* Input can be from a file, or from standard input, as the developer chooses.
-* Provide test data to exercise the application.
-* It is not required to provide any graphical output
-showing the movement of the toy robot.
-
-## Constraints
-
-The toy robot must not fall off the table during movement.
-This also includes the initial placement of the toy robot.
-Any move that would cause the robot to fall must be ignored.
-
-Example Input and Output:
-
+# Test suite
+On top of each commit, all tests should pass:
 ```
-# Example a
-PLACE 0,0,NORTH
-MOVE
-REPORT
-# Output: 0,1,NORTH
+  bundle exec rspec -- spec/
 ```
-
-
+# Check code syntax
+On top of each commit, no offense should be detected
 ```
-# Example b
-PLACE 0,0,NORTH
-LEFT
-REPORT
-# Output: 0,0,WEST
+  bundle exec rubocop -c .rubocop-validation.yml -- .
 ```
+This will check the core offenses. The other "offenses" are related to the code quality. They will handled in ```.rubocop.yml```: so advices are displayed on the IDE but they don't block the deployment.
 
+# Concepts
+This kind of problem is a translation / compilator (yes like GCC) problem:
+* We have an input file of instructions (aka source code)
+* They should be understood (aka instructions should be parsed)
+* They should move the robot (aka instructions should be executed)
 
-```
-# Example c
-PLACE 1,2,EAST
-MOVE
-MOVE
-LEFT
-MOVE
-REPORT
-# Output: 3,3,NORTH
-```
+I decided to have a very strict **syntax parser**:
 
-## Acknowledgement
+| Instruction    | valid? | reason                                         |
+|----------------|--------|------------------------------------------------|
+| MOVE           | ✓      |                                                |
+| move           | ✕      | Not upcased: each letter should be capitalized |
+| move,4,2,NORTH | ✕      | This instruction should have no parameter      |
+| PLACE,4,2, NORTH | ✕      | There should be no whitespace before NORTH      |
 
-The Toy Robot Challenge was originally formulated by [Jon Eaves](https://twitter.com/joneaves)
+The execution will be more tolerant: we will ignore all instructions that would through the robot out of the table. I would have preferred to raise an exception, but well, it's the [spec](SPEC.md)!
