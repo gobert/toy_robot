@@ -10,6 +10,8 @@ class Robot
     @x = x
     @y = y
     @face = face
+
+    [x, y, face]
   end
 
   def report
