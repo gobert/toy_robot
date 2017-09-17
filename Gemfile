@@ -16,4 +16,6 @@ end
 group :test do
   gem 'rspec'
   gem 'rubocop-rspec'
+
+  gem 'simplecov', require: false
 end

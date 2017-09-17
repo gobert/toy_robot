@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 ENV['RUBY_ENV'] = 'test'
 
 require File.expand_path('../../toy_robot.rb', __FILE__)
