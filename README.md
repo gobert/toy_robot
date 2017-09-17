@@ -1,5 +1,8 @@
 # Toy Robot Simulator
-![Travis build information for branch master](https://api.travis-ci.org/gobert/toy_robot.svg?branch=master)
+[![Travis build information for branch master](https://api.travis-ci.org/gobert/toy_robot.svg?branch=master)](https://travis-ci.org/gobert/toy_robot)
+[![Code Climate](https://codeclimate.com/github/gobert/toy_robot/badges/gpa.svg)](https://codeclimate.com/github/gobert/toy_robot)
+[![Dependency Status](https://gemnasium.com/gobert/toy_robot.svg)](https://gemnasium.com/gobert/toy_robot)
+[![Security warnings](https://hakiri.io/github/gobert/toy_robot/master.svg)](https://hakiri.io/projects/b8d0f5e3ca8785)
 
 This is a simulator of a robot that evolve on a 5x5 square tabletop. As input it takes a files like:
 
