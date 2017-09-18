@@ -15,3 +15,9 @@ Style/NegatedIf:
 # https://github.com/bbatsov/ruby-style-guide/tree/2aae57ed197e2b3d9a475c665a831a30b7b6d072#alias-method
 Style/Alias:
   Enabled: false
+
+# Because acceptance test are not as simple as unit tests
+RSpec/MultipleExpectations:
+  Enabled: false
+  Exclude:
+    - spec/runner_acceptance_spec.rb
