@@ -15,8 +15,8 @@ class Runner
         executor.execute(command)
       rescue ToyRobot::ExecutionError
         # sic.
-        puts "\tINFO - #{command.inspect} for robot #{robot.inspect}"
-        puts "\t       Execution ignored in order to prevent the robot to fall."
+        message = "#{command.inspect} for robot #{robot.inspect}"
+        ToyRobot.logger.warn message
       end
     end
   end

@@ -17,7 +17,7 @@ class CommandExecutor
     raise ToyRobot::ExecutionError, '' if execution_error?(*prediction)
 
     if instruction == 'report'
-      puts robot.vector.join(',')
+      ToyRobot.logger.info robot.vector.join(',')
       robot.vector
     else
       robot.vector = *prediction
