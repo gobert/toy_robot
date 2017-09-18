@@ -2,9 +2,6 @@
 # It handles the execution errors of the robot:
 # it ensures that the robot does not fall down the table
 class CommandExecutor
-  class ExecutionError < RuntimeError
-  end
-
   attr_reader :robot, :table
 
   def initialize(robot, table)
@@ -16,7 +13,7 @@ class CommandExecutor
     instruction = command.instruction.downcase
     params = [command.x, command.y, command.direction].compact
     prediction = method('predict_' + instruction).call(*params)
-    raise ExecutionError, '' if execution_error?(*prediction)
+    raise ToyRobot::ExecutionError, '' if execution_error?(*prediction)
 
     if instruction == 'report'
       puts robot.vector.join(',')

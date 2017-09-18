@@ -23,7 +23,7 @@ describe CommandExecutor do
       let(:y)       { 142 }
       let(:command) { Command.new('PLACE', x, y, face) }
 
-      it { is_expected.to raise_error(described_class::ExecutionError) }
+      it { is_expected.to raise_error(ToyRobot::ExecutionError) }
     end
   end
 
@@ -60,25 +60,25 @@ describe CommandExecutor do
       context 'when robot is facing NORTH' do
         let(:robot) { Robot.new(1, table.height, 'NORTH') }
 
-        it { is_expected.to raise_error(CommandExecutor::ExecutionError) }
+        it { is_expected.to raise_error(ToyRobot::ExecutionError) }
       end
 
       context 'when robot is facing EAST' do
         let(:robot) { Robot.new(table.width, 1, 'EAST') }
 
-        it { is_expected.to raise_error(CommandExecutor::ExecutionError) }
+        it { is_expected.to raise_error(ToyRobot::ExecutionError) }
       end
 
       context 'when robot is facing SOUTH' do
         let(:robot) { Robot.new(1, 0, 'SOUTH') }
 
-        it { is_expected.to raise_error(CommandExecutor::ExecutionError) }
+        it { is_expected.to raise_error(ToyRobot::ExecutionError) }
       end
 
       context 'when robot is facing WEST' do
         let(:robot) { Robot.new(0, 1, 'WEST') }
 
-        it { is_expected.to raise_error(CommandExecutor::ExecutionError) }
+        it { is_expected.to raise_error(ToyRobot::ExecutionError) }
       end
     end
   end

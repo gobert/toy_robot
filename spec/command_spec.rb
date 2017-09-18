@@ -9,7 +9,7 @@ describe Command do
     context 'when command does not exist' do
       let(:instructions) { ['FOO'] }
 
-      it { is_expected.to raise_error(Command::SyntaxError) }
+      it { is_expected.to raise_error(ToyRobot::SyntaxError) }
     end
 
     context 'having PLACE' do
@@ -28,7 +28,7 @@ describe Command do
       context 'when F does not represent one of the 4 cardinal points' do
         let(:instructions) { ['PLACE', 4, 2, 'regarding FOO'] }
 
-        it { is_expected.to raise_error(Command::SyntaxError) }
+        it { is_expected.to raise_error(ToyRobot::SyntaxError) }
       end
 
       context 'when PLACE is correct' do
@@ -42,7 +42,7 @@ describe Command do
       let(:instructions) { ['MOVE', 4, 2, 'NORTH'] }
 
       context 'when MOVE has arguments' do
-        it { is_expected.to raise_error(Command::SyntaxError) }
+        it { is_expected.to raise_error(ToyRobot::SyntaxError) }
       end
 
       context 'when MOVE is correct' do
@@ -56,7 +56,7 @@ describe Command do
       let(:instructions) { ['LEFT', 4, 2, 'NORTH'] }
 
       context 'when LEFT has arguments' do
-        it { is_expected.to raise_error(Command::SyntaxError) }
+        it { is_expected.to raise_error(ToyRobot::SyntaxError) }
       end
 
       context 'when LEFT is correct' do
@@ -70,7 +70,7 @@ describe Command do
       let(:instructions) { ['RIGHT', 4, 2, 'NORTH'] }
 
       context 'when RIGHT has arguments' do
-        it { is_expected.to raise_error(Command::SyntaxError) }
+        it { is_expected.to raise_error(ToyRobot::SyntaxError) }
       end
 
       context 'when RIGHT is correct' do
@@ -84,7 +84,7 @@ describe Command do
       let(:instructions) { ['REPORT', 4, 2, 'NORTH'] }
 
       context 'when REPORT has arguments' do
-        it { is_expected.to raise_error(Command::SyntaxError) }
+        it { is_expected.to raise_error(ToyRobot::SyntaxError) }
       end
 
       context 'when REPORT is correct' do

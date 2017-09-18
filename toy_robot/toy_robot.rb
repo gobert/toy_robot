@@ -27,6 +27,7 @@ class ToyRobot
     require File.expand_path('../models/command.rb', root)
     require File.expand_path('../models/commands_list.rb', root)
     require File.expand_path('../command_executor.rb', root)
+    require File.expand_path('../errors.rb', root)
     require File.expand_path('../runner.rb', root)
     require File.expand_path('../models/robot.rb', root)
   end
