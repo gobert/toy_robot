@@ -19,6 +19,13 @@ The ```REPORT``` will announce the X,Y and F of the robot: it will be our output
 * Install ruby 2.4.1. For instance using rvm ``` rvm install 2.4.1```
 * Install dependencies ```bundle install```
 
+# Run it
+Run it with the following command:
+```
+ENV=production bundle exec ruby bin/toy_robot.rb spec/fixtures/valid_command_list
+```
+There is a ```bin/``` folder, so you can add it to your UNIX's variable "$PATH".
+
 # Test suite
 On top of each commit, all tests should pass:
 ```
