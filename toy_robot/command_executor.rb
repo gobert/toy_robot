@@ -14,15 +14,15 @@ class CommandExecutor
 
   def execute(command)
     instruction = command.instruction.downcase
-    params = [command.x, command.y, command.face].compact
+    params = [command.x, command.y, command.direction].compact
     prediction = method('predict_' + instruction).call(*params)
     raise ExecutionError, '' if execution_error?(*prediction)
 
     if instruction == 'report'
-      puts robot.report.join(',')
-      robot.report
+      puts robot.vector.join(',')
+      robot.vector
     else
-      robot.place(*prediction)
+      robot.vector = *prediction
     end
   end
 
@@ -37,69 +37,65 @@ class CommandExecutor
     fall_west || fall_east || fall_south || fall_north
   end
 
-  def predict_place(x, y, face)
-    [x, y, face]
+  def predict_place(x, y, direction)
+    [x, y, direction]
   end
 
   def predict_report
-    robot.report
+    robot.vector
   end
 
   def predict_move
     x = robot.x
     y = robot.y
 
-    if robot.face == 'NORTH'
+    if robot.direction == 'NORTH'
       y += 1
-    elsif robot.face == 'EAST'
+    elsif robot.direction == 'EAST'
       x += 1
-    elsif  robot.face == 'SOUTH'
+    elsif  robot.direction == 'SOUTH'
       y -= 1
-    elsif  robot.face == 'WEST'
+    elsif  robot.direction == 'WEST'
       x -= 1
     else
       raise 'Unkown robot direction'
     end
 
-    [x, y, robot.face]
+    [x, y, robot.direction]
   end
 
   # I know that this kind of stuff works:
   # (ordered_array.index('WEST') +1 ) % ordered_array.size
   # But well do you find it simple from KISS?
   def predict_right
-    face = robot.face
+    direction = if robot.direction == 'NORTH'
+                  'EAST'
+                elsif robot.direction == 'EAST'
+                  'SOUTH'
+                elsif robot.direction == 'SOUTH'
+                  'WEST'
+                elsif robot.direction == 'WEST'
+                  'NORTH'
+                else
+                  raise 'Unkown robot direction'
+                end
 
-    face = if face == 'NORTH'
-             'EAST'
-           elsif face == 'EAST'
-             'SOUTH'
-           elsif  face == 'SOUTH'
-             'WEST'
-           elsif  face == 'WEST'
-             'NORTH'
-           else
-             raise 'Unkown robot direction'
-           end
-
-    [robot.x, robot.y, face]
+    [robot.x, robot.y, direction]
   end
 
   def predict_left
-    face = robot.face
+    direction = if robot.direction == 'NORTH'
+                  'WEST'
+                elsif robot.direction == 'EAST'
+                  'NORTH'
+                elsif robot.direction == 'SOUTH'
+                  'EAST'
+                elsif robot.direction == 'WEST'
+                  'SOUTH'
+                else
+                  raise 'Unkown robot direction'
+                end
 
-    face = if face == 'NORTH'
-             'WEST'
-           elsif face == 'EAST'
-             'NORTH'
-           elsif  face == 'SOUTH'
-             'EAST'
-           elsif  face == 'WEST'
-             'SOUTH'
-           else
-             raise 'Unkown robot direction'
-           end
-
-    [robot.x, robot.y, face]
+    [robot.x, robot.y, direction]
   end
 end

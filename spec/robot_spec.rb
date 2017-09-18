@@ -1,42 +1,42 @@
 require 'spec_helper'
 
 describe Robot do
-  let(:x)    { 4 }
-  let(:y)    { 2 }
-  let(:face) { 'NORTH' }
+  let(:x) { 4 }
+  let(:y) { 2 }
+  let(:direction) { 'NORTH' }
 
-  describe '#report' do
-    let(:report) { described_class.new(x, y, face).report }
+  describe '#vector' do
+    let(:vector) { described_class.new(x, y, direction).vector }
 
     context 'having first returned object' do
       it 'returns x' do
-        returned_x, = report
+        returned_x, = vector
         expect(returned_x).to eq(x)
       end
     end
 
     context 'having secund returned object' do
       it 'returns x' do
-        _, returned_y, = report
+        _, returned_y, = vector
         expect(returned_y).to eq(y)
       end
     end
 
     context 'having third returned object' do
       it 'returns x' do
-        _, _, returned_face = report
-        expect(returned_face).to eq(face)
+        _, _, returned_direction = vector
+        expect(returned_direction).to eq(direction)
       end
     end
   end
 
-  describe '#place' do
-    subject { -> { robot.place(x, y, face) } }
+  describe '#vector=' do
+    subject { -> { robot.vector = x, y, direction } }
 
     let(:robot) { described_class.new(20, 29, 'SOUTH') }
 
     it { is_expected.to change { robot.x }.to(x) }
     it { is_expected.to change { robot.y }.to(y) }
-    it { is_expected.to change { robot.face }.to(face) }
+    it { is_expected.to change { robot.direction }.to(direction) }
   end
 end

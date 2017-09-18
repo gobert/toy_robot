@@ -15,7 +15,7 @@ describe CommandExecutor do
 
       it { is_expected.to change { robot.x }.to(x) }
       it { is_expected.to change { robot.y }.to(y) }
-      it { is_expected.to change { robot.face }.to(face) }
+      it { is_expected.to change { robot.direction }.to(face) }
     end
 
     context 'when placing the robot out the table' do
@@ -89,25 +89,25 @@ describe CommandExecutor do
     context 'when robot is facing NORTH' do
       let(:robot) { Robot.new(1, 1, 'NORTH') }
 
-      it { is_expected.to change { robot.face }.to('EAST') }
+      it { is_expected.to change { robot.direction }.to('EAST') }
     end
 
     context 'when robot is facing EAST' do
       let(:robot) { Robot.new(1, 1, 'EAST') }
 
-      it { is_expected.to change { robot.face }.to('SOUTH') }
+      it { is_expected.to change { robot.direction }.to('SOUTH') }
     end
 
     context 'when robot is facing SOUTH' do
       let(:robot) { Robot.new(1, 1, 'SOUTH') }
 
-      it { is_expected.to change { robot.face }.to('WEST') }
+      it { is_expected.to change { robot.direction }.to('WEST') }
     end
 
     context 'when robot is facing WEST' do
       let(:robot) { Robot.new(1, 1, 'WEST') }
 
-      it { is_expected.to change { robot.face }.to('NORTH') }
+      it { is_expected.to change { robot.direction }.to('NORTH') }
     end
   end
 
@@ -117,25 +117,25 @@ describe CommandExecutor do
     context 'when robot is facing NORTH' do
       let(:robot) { Robot.new(1, 1, 'NORTH') }
 
-      it { is_expected.to change { robot.face }.to('WEST') }
+      it { is_expected.to change { robot.direction }.to('WEST') }
     end
 
     context 'when robot is facing EAST' do
       let(:robot) { Robot.new(1, 1, 'EAST') }
 
-      it { is_expected.to change { robot.face }.to('NORTH') }
+      it { is_expected.to change { robot.direction }.to('NORTH') }
     end
 
     context 'when robot is facing SOUTH' do
       let(:robot) { Robot.new(1, 1, 'SOUTH') }
 
-      it { is_expected.to change { robot.face }.to('EAST') }
+      it { is_expected.to change { robot.direction }.to('EAST') }
     end
 
     context 'when robot is facing WEST' do
       let(:robot) { Robot.new(1, 1, 'WEST') }
 
-      it { is_expected.to change { robot.face }.to('SOUTH') }
+      it { is_expected.to change { robot.direction }.to('SOUTH') }
     end
   end
 
@@ -158,9 +158,9 @@ describe CommandExecutor do
     end
 
     context 'having third returned object' do
-      it 'returns face' do
-        _, _, face = report
-        expect(face).to eq(robot.face)
+      it 'returns direction' do
+        _, _, direction = report
+        expect(direction).to eq(robot.direction)
       end
     end
   end

@@ -6,10 +6,10 @@ class Command
   class SyntaxError < RuntimeError
   end
 
-  attr_reader :instruction, :x, :y, :face
+  attr_reader :instruction, :x, :y, :direction
 
   def initialize(*instruction_row)
-    @instruction, @x, @y, @face = instruction_row
+    @instruction, @x, @y, @direction = instruction_row
     @x = Integer(@x) if @x.present?
     @y = Integer(@y) if @y.present?
   end
@@ -24,16 +24,16 @@ class Command
   end
 
   def move_correct?
-    raise SyntaxError, 'Does not understand MOVE with X, Y or FACE' \
-      if x.present? || y.present? || face.present?
+    raise SyntaxError, 'Does not understand MOVE with X, Y or DIRECTION' \
+      if x.present? || y.present? || direction.present?
   end
   alias_method :right_correct?, :move_correct?
   alias_method :left_correct?, :move_correct?
   alias_method :report_correct?, :move_correct?
 
   def place_correct?
-    raise SyntaxError, 'Unkown direction: ' + face \
-      if !%w[NORTH SOUTH EAST WEST].include? face
+    raise SyntaxError, 'Unkown direction: ' + direction \
+      if !%w[NORTH SOUTH EAST WEST].include? direction
 
     begin
       @x = Integer(x)
