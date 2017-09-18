@@ -7,6 +7,7 @@ class Command
 
   def initialize(*instruction_row)
     @instruction, @x, @y, @direction = instruction_row
+    correct?
   end
 
   def correct?

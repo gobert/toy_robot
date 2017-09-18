@@ -11,11 +11,9 @@ class CommandExecutor
 
   def execute(command)
     instruction = command.instruction.downcase
-
-    command.correct?
-
     params = [command.x, command.y, command.direction].compact
     prediction = method('predict_' + instruction).call(*params)
+
     raise ToyRobot::ExecutionError, '' if execution_error?(*prediction)
 
     if instruction == 'report'
