@@ -1,13 +1,20 @@
 require 'spec_helper'
 
 describe CommandExecutor do
-  subject { -> { described_class.new(robot, table).execute(command) } }
+  subject do
+    lambda do
+      executor = described_class.new(robot, table)
+      executor.execute(init)
+      executor.execute(command)
+    end
+  end
 
   let(:x)     { 4 }
   let(:y)     { 2 }
   let(:face)  { 'WEST' }
   let(:table) { Table.new(5, 5) }
-  let(:robot) { Robot.new(0, 0, 'NORTH') }
+  let(:robot) { Robot.new }
+  let(:init)  { Command.new('PLACE', 0, 0, 'NORTH') }
 
   describe '#execute having PLACE' do
     context 'when placing the robot on the table' do
@@ -32,51 +39,51 @@ describe CommandExecutor do
 
     context 'when moving the robot on the table' do
       context 'when robot is facing NORTH' do
-        let(:robot) { Robot.new(1, 1, 'NORTH') }
+        let(:init) { Command.new('PLACE', 1, 1, 'NORTH') }
 
-        it { is_expected.to change { robot.y }.by(1) }
+        it { is_expected.to change { robot.y }.from(nil).to(2) }
       end
 
       context 'when robot is facing EAST' do
-        let(:robot) { Robot.new(1, 1, 'EAST') }
+        let(:init)  { Command.new('PLACE', 1, 1, 'EAST') }
 
-        it { is_expected.to change { robot.x }.by(1) }
+        it { is_expected.to change { robot.x }.from(nil).to(2) }
       end
 
       context 'when robot is facing SOUTH' do
-        let(:robot) { Robot.new(1, 1, 'SOUTH') }
+        let(:init)  { Command.new('PLACE', 1, 1, 'SOUTH') }
 
-        it { is_expected.to change { robot.y }.by(-1) }
+        it { is_expected.to change { robot.y }.from(nil).to(0) }
       end
 
       context 'when robot is facing WEST' do
-        let(:robot) { Robot.new(1, 1, 'WEST') }
+        let(:init)  { Command.new('PLACE', 1, 1, 'WEST') }
 
-        it { is_expected.to change { robot.x }.by(-1) }
+        it { is_expected.to change { robot.x }.from(nil).to(0) }
       end
     end
 
     context 'when moving the robot out the table' do
       context 'when robot is facing NORTH' do
-        let(:robot) { Robot.new(1, table.height, 'NORTH') }
+        let(:init)  { Command.new('PLACE', 1, table.height, 'NORTH') }
 
         it { is_expected.to raise_error(ToyRobot::ExecutionError) }
       end
 
       context 'when robot is facing EAST' do
-        let(:robot) { Robot.new(table.width, 1, 'EAST') }
+        let(:init)  { Command.new('PLACE', table.width, 1, 'EAST') }
 
         it { is_expected.to raise_error(ToyRobot::ExecutionError) }
       end
 
       context 'when robot is facing SOUTH' do
-        let(:robot) { Robot.new(1, 0, 'SOUTH') }
+        let(:init)  { Command.new('PLACE', 1, 0, 'SOUTH') }
 
         it { is_expected.to raise_error(ToyRobot::ExecutionError) }
       end
 
       context 'when robot is facing WEST' do
-        let(:robot) { Robot.new(0, 1, 'WEST') }
+        let(:init)  { Command.new('PLACE', 0, 1, 'WEST') }
 
         it { is_expected.to raise_error(ToyRobot::ExecutionError) }
       end
@@ -87,25 +94,25 @@ describe CommandExecutor do
     let(:command) { Command.new('RIGHT') }
 
     context 'when robot is facing NORTH' do
-      let(:robot) { Robot.new(1, 1, 'NORTH') }
+      let(:init)  { Command.new('PLACE', 1, 1, 'NORTH') }
 
       it { is_expected.to change { robot.direction }.to('EAST') }
     end
 
     context 'when robot is facing EAST' do
-      let(:robot) { Robot.new(1, 1, 'EAST') }
+      let(:init)  { Command.new('PLACE', 1, 1, 'EAST') }
 
       it { is_expected.to change { robot.direction }.to('SOUTH') }
     end
 
     context 'when robot is facing SOUTH' do
-      let(:robot) { Robot.new(1, 1, 'SOUTH') }
+      let(:init)  { Command.new('PLACE', 1, 1, 'SOUTH') }
 
       it { is_expected.to change { robot.direction }.to('WEST') }
     end
 
     context 'when robot is facing WEST' do
-      let(:robot) { Robot.new(1, 1, 'WEST') }
+      let(:init)  { Command.new('PLACE', 1, 1, 'WEST') }
 
       it { is_expected.to change { robot.direction }.to('NORTH') }
     end
@@ -115,25 +122,25 @@ describe CommandExecutor do
     let(:command) { Command.new('LEFT') }
 
     context 'when robot is facing NORTH' do
-      let(:robot) { Robot.new(1, 1, 'NORTH') }
+      let(:init)  { Command.new('PLACE', 1, 1, 'NORTH') }
 
       it { is_expected.to change { robot.direction }.to('WEST') }
     end
 
     context 'when robot is facing EAST' do
-      let(:robot) { Robot.new(1, 1, 'EAST') }
+      let(:init)  { Command.new('PLACE', 1, 1, 'EAST') }
 
       it { is_expected.to change { robot.direction }.to('NORTH') }
     end
 
     context 'when robot is facing SOUTH' do
-      let(:robot) { Robot.new(1, 1, 'SOUTH') }
+      let(:init)  { Command.new('PLACE', 1, 1, 'SOUTH') }
 
       it { is_expected.to change { robot.direction }.to('EAST') }
     end
 
     context 'when robot is facing WEST' do
-      let(:robot) { Robot.new(1, 1, 'WEST') }
+      let(:init)  { Command.new('PLACE', 1, 1, 'WEST') }
 
       it { is_expected.to change { robot.direction }.to('SOUTH') }
     end
@@ -142,6 +149,7 @@ describe CommandExecutor do
   describe '#execute having REPORT' do
     let(:command) { Command.new('REPORT') }
     let(:report)  { subject.call }
+    let(:init)    { Command.new('PLACE', 1, 1, 'WEST') }
 
     context 'having first returned object' do
       it 'returns x' do

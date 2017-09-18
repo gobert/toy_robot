@@ -72,12 +72,3 @@ directions_ordered = ["NORTH", "EAST", "SOUTH", "WEST"]
 new_direction = (directions_ordered.index('WEST') +1 ) % directions_ordered.size
 ```
 The trick looks cool, it compacts the code. But the code is after way more difficult to understand: the code is less ```KISS```. So I chose to stick to a naive ```IF ELSIF ... END``` implementation.
-* As far of my understanding, there is a contradiction in the spec [spec](SPEC.md)
-```
-A robot that is not on the table can choose to ignore the MOVE, LEFT, RIGHT and REPORT commands.
-```
-and
-```
-The application should discard all commands in the sequence until a valid PLACEcommand has been executed.
-```
-In my implementation the command before the first ```PLACE``` are executed, but it does not matter because PLACE reset [the state of](https://en.wikipedia.org/wiki/Finite-state_machine) the robot. There is a spec that ensure it in the acceptance tests.

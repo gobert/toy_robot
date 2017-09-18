@@ -6,7 +6,13 @@ describe Robot do
   let(:direction) { 'NORTH' }
 
   describe '#vector' do
-    let(:vector) { described_class.new(x, y, direction).vector }
+    let(:robot) do
+      robot = described_class.new
+      robot.vector = x, y, direction
+      robot
+    end
+
+    let(:vector) { robot.vector }
 
     context 'having first returned object' do
       it 'returns x' do
@@ -33,7 +39,7 @@ describe Robot do
   describe '#vector=' do
     subject { -> { robot.vector = x, y, direction } }
 
-    let(:robot) { described_class.new(20, 29, 'SOUTH') }
+    let(:robot) { described_class.new }
 
     it { is_expected.to change { robot.x }.to(x) }
     it { is_expected.to change { robot.y }.to(y) }

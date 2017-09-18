@@ -4,9 +4,10 @@
 # they will be implemented in another class.
 class Robot
   attr_reader :x, :y, :direction
+  attr_accessor :placed
 
-  def initialize(x, y, direction)
-    self.vector = x, y, direction
+  def initialize
+    self.placed = false
   end
 
   def vector=(*args)

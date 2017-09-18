@@ -1,7 +1,11 @@
 require 'spec_helper'
 
 describe Runner do
-  let!(:robot) { Robot.new(0, 0, 'NORTH') }
+  let(:robot) do
+    robot = Robot.new
+    robot.vector = 0, 0, 'NORTH'
+    robot
+  end
   let(:runner) { described_class.new(spec_path) }
 
   before do

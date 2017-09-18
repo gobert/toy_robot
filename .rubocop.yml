@@ -17,7 +17,7 @@ Style/Alias:
   Enabled: false
 
 # Because acceptance test are not as simple as unit tests
-RSpec/MultipleExpectations:
-  Enabled: false
+RSpec/MessageSpies:
+  Enabled: true
   Exclude:
     - spec/runner_acceptance_spec.rb

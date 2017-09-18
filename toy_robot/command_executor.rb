@@ -10,21 +10,38 @@ class CommandExecutor
   end
 
   def execute(command)
+    raise ToyRobot::ExecutionError, 'Prevent robot to move out of the table' \
+     if command.instruction != 'PLACE' && !robot.placed
+
     instruction = command.instruction.downcase
     params = [command.x, command.y, command.direction].compact
     prediction = method('predict_' + instruction).call(*params)
 
-    raise ToyRobot::ExecutionError, '' if execution_error?(*prediction)
+    raise ToyRobot::ExecutionError, 'Prevent robot to fall out of the table' \
+      if execution_error?(*prediction)
 
-    if instruction == 'report'
-      ToyRobot.logger.info robot.vector.join(',')
-      robot.vector
-    else
-      robot.vector = *prediction
-    end
+    method('execute_' + instruction).call(*prediction)
+    prediction
   end
 
   private
+
+  def execute_place(x, y, direction)
+    robot.placed = true
+    robot.vector = x, y, direction
+  end
+
+  def execute_report(*_)
+    # binding.pry
+    ToyRobot.logger.info robot.vector.join(',')
+    robot.vector
+  end
+
+  def execute_move(x, y, direction)
+    robot.vector = x, y, direction
+  end
+  alias_method :execute_left, :execute_move
+  alias_method :execute_right, :execute_move
 
   def execution_error?(x, y, *_)
     fall_west = x < 0

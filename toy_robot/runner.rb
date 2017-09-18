@@ -28,7 +28,7 @@ class Runner
   end
 
   def robot
-    @robot ||= Robot.new(0, 0, 'NORTH')
+    @robot ||= Robot.new
   end
 
   def table
