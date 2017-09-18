@@ -7,8 +7,6 @@ class Command
 
   def initialize(*instruction_row)
     @instruction, @x, @y, @direction = instruction_row
-    @x = Integer(@x) if @x.present?
-    @y = Integer(@y) if @y.present?
   end
 
   def correct?

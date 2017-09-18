@@ -16,13 +16,13 @@ describe Command do
       context 'when X does not represent an integer' do
         let(:instructions) { ['PLACE', '-pi', 0, 'NORTH'] }
 
-        it { is_expected.to raise_error(ArgumentError) }
+        it { is_expected.to raise_error(ToyRobot::SyntaxError) }
       end
 
       context 'when Y does not represent an integer' do
         let(:instructions) { ['PLACE', 0, '-pi', 'NORTH'] }
 
-        it { is_expected.to raise_error(ArgumentError) }
+        it { is_expected.to raise_error(ToyRobot::SyntaxError) }
       end
 
       context 'when F does not represent one of the 4 cardinal points' do
