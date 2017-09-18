@@ -11,7 +11,13 @@ class Runner
 
   def run
     commands_list.each do |command|
-      executor.execute(command)
+      begin
+        executor.execute(command)
+      rescue ToyRobot::ExecutionError
+        # sic.
+        puts "\tINFO - #{command.inspect} for robot #{robot.inspect}"
+        puts "\t       Execution ignored in order to prevent the robot to fall."
+      end
     end
   end
 
